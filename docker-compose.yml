@@ -1,0 +1,55 @@
+version: '3.8'
+
+networks:
+  net:
+    driver: bridge
+
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: ./billing_service/
+    command: /opt/run.sh
+#    command: ./manage.py runserver 0.0.0.0:8000
+    env_file:
+      - variables/dev.env
+    volumes:
+      - ./billing_service:/opt/django
+    networks:
+      - net
+    expose:
+      - 8000
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13.2
+    env_file:
+      - variables/dev.env
+    networks:
+      - net
+    ports:
+      - '15432:5432'
+    volumes:
+      - ./__volumes/pg_data:/var/lib/postgresql/data
+
+  nginx:
+    build:
+      dockerfile: Dockerfile.nginx
+      context: ./billing_service/
+    env_file:
+      - variables/dev.env
+    volumes:
+      - ./billing_service/static:/var/www/app-static
+    ports:
+      - 8000:80
+    depends_on:
+      - app
+    networks:
+      - net
+
+volumes:
+  app:
+    driver: local
+  db:
+    driver: local

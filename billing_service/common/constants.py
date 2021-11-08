@@ -1,0 +1,2 @@
+OPERATION_PURCHASE = 'purchase'
+WITHDRAWAL_OPERATION = 'withdrawal'
