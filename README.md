@@ -192,3 +192,12 @@ Response example:
 * `make build` - build service
 * `make up` - launch service
 * `make linter` to launch pylint linter
+
+
+
+
+
+todo list: 
+* add refund logic
+* add logging
+* cover service layer with tests
