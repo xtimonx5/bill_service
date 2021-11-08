@@ -6,8 +6,6 @@ from django.db.transaction import atomic
 from common.models import UserAccount, AccountOperation
 from common.services.daos import AccountDAO
 
-import common.constants
-
 User = get_user_model()
 
 
